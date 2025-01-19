@@ -1,5 +1,6 @@
 package test;
 
+import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
 import page.HeaderPage;
@@ -7,7 +8,7 @@ import page.LoginPage;
 import page.MainPage;
 import page.PersonalAccountPage;
 
-import static Constants.DataConstants.LINK_FOR_LOGIN_PAGE;
+import static constants.DataConstants.LINK_FOR_LOGIN_PAGE;
 
 public class TransitionInHeaderTest extends BaseUITest {
     @Before
@@ -20,6 +21,7 @@ public class TransitionInHeaderTest extends BaseUITest {
     }
 
     @Test
+    @Description("Проверка отображения полей: Имя, Пароль, Логин")
     public void transitionToPersonalAccountTest() {
         HeaderPage headerPage = new HeaderPage(driver);
         headerPage.clickPersonalAccount();
@@ -31,6 +33,7 @@ public class TransitionInHeaderTest extends BaseUITest {
     }
 
     @Test
+    @Description("Переход на главную страницу по клику на логотип")
     public void transitionToMainPageByClickLogoTest() {
         HeaderPage headerPage = new HeaderPage(driver);
         headerPage.clickPersonalAccount();
@@ -42,6 +45,7 @@ public class TransitionInHeaderTest extends BaseUITest {
     }
 
     @Test
+    @Description("Выход из личного кабинета")
     public void signOutTest() {
         HeaderPage headerPage = new HeaderPage(driver);
         headerPage.clickPersonalAccount();

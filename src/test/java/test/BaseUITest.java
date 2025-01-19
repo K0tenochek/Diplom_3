@@ -12,11 +12,10 @@ import util.Browser;
 
 import java.util.Random;
 
-import static Constants.DataConstants.LINK_FOR_MAIN_PAGE;
+import static constants.DataConstants.*;
 import static io.restassured.RestAssured.given;
 
 public abstract class BaseUITest {
-
     protected WebDriver driver;
     private ObjectMapper objectMapper;
     private String token;
@@ -43,14 +42,14 @@ public abstract class BaseUITest {
         RestAssured.baseURI = LINK_FOR_MAIN_PAGE;
         String json = objectMapper.writeValueAsString(registrationRequest);
         Response response = given()
-                .header("Content-type", "application/json")
+                .header(CONTENT_TYPE, APPLICATION_JSON)
                 .body(json)
-                .post("/api/auth/register")
+                .post(API_AUTH_REGISTER)
                 .then().log().all()
                 .assertThat()
                 .statusCode(200)
                 .extract().response();
-        token = response.jsonPath().getString("accessToken");
+        token = response.jsonPath().getString(ACCESS_TOKEN);
     }
 
     @After
@@ -62,8 +61,8 @@ public abstract class BaseUITest {
     public void deleteUser() {
         if (token != null) {
             given()
-                    .header("Authorization", token)
-                    .delete("/api/auth/user")
+                    .header(AUTHORIZATION, token)
+                    .delete(API_AUTH_USER)
                     .then().log().all();
         }
     }
@@ -72,15 +71,15 @@ public abstract class BaseUITest {
         AuthUserRequest authUserRequest = new AuthUserRequest(email, password);
         String body = new ObjectMapper().writeValueAsString(authUserRequest);
         String token = given()
-                .header("Content-type", "application/json")
+                .header(CONTENT_TYPE, APPLICATION_JSON)
                 .body(body)
-                .post("/api/auth/login")
+                .post(API_AUTH_LOGIN)
                 .then()
                 .statusCode(200)
-                .extract().path("accessToken");
+                .extract().path(ACCESS_TOKEN);
         given()
-                .header("Authorization", token)
-                .delete("/api/auth/user")
+                .header(AUTHORIZATION, token)
+                .delete(API_AUTH_USER)
                 .then().log().all();
     }
 }

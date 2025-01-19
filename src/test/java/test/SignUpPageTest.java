@@ -1,12 +1,13 @@
 package test;
 
+import io.qameta.allure.Description;
 import org.junit.Test;
 import page.LoginPage;
 import page.SignUpFormPage;
 
 import java.util.Random;
 
-import static Constants.DataConstants.LINK_FOR_REGISTRATION_PAGE;
+import static constants.DataConstants.LINK_FOR_REGISTRATION_PAGE;
 
 public class SignUpPageTest extends BaseUITest {
 
@@ -15,6 +16,7 @@ public class SignUpPageTest extends BaseUITest {
     public static final String NAME = "Lika";
 
     @Test
+    @Description("Успешная регистрация")
     public void signUpSuccessfully() throws Exception {
         driver.get(LINK_FOR_REGISTRATION_PAGE);
         SignUpFormPage signUpFormPage = new SignUpFormPage(driver);
@@ -30,6 +32,7 @@ public class SignUpPageTest extends BaseUITest {
     }
 
     @Test
+    @Description("Регистрация с коротким паролем")
     public void signTooShortPassword() {
         driver.get(LINK_FOR_REGISTRATION_PAGE);
         SignUpFormPage signUpFormPage = new SignUpFormPage(driver);
